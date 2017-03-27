@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf8" />
+  <title>Добавление книги</title>
+  <script src="js/jquery-3.1.1.min.js"></script>
+
+	<script>
+$(document).ready(function(){
+  $("#formupload").submit(function(){
+    var type = $(this).attr("method");
+    var url = $(this).attr("action");
+    var formData = new FormData($(this)[0]);
+    $.ajax({
+      url: url,
+      data: formData,
+      dataType: "json",
+      type: type,
+      contentType: false,
+      processData: false,
+      success: function (data){
+        $("<img>")
+        .attr("src",data.filelink)
+        .appendTo($("#formupload"));
+      }
+    });
+    return false;
+  });
+});
+</script>
+	</head>
+<body>
+<form action="submit.php" method="post" enctype="multipart/form-data"  id="formupload">
+  <input type="file" name="file" id="fileupload" />
+  <button>Загрузить</button>
+</form>
+</body>
+</html>
